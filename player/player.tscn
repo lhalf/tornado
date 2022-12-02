@@ -1,0 +1,93 @@
+[gd_scene load_steps=11 format=3 uid="uid://brmbioeuy4vs2"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_nix7t"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_s81r5"]
+height = 4.0
+
+[sub_resource type="Curve" id="Curve_j2or2"]
+_data = [Vector2(0, 0.290909), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_pbjcl"]
+curve = SubResource("Curve_j2or2")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_imiua"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 0.0
+emission_ring_radius = 0.1
+emission_ring_inner_radius = 0.0
+direction = Vector3(0, 1, 0)
+spread = 0.0
+flatness = 1.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 12.0
+initial_velocity_max = 15.0
+tangential_accel_min = 1.0
+tangential_accel_max = 20.0
+scale_max = 15.0
+scale_curve = SubResource("CurveTexture_pbjcl")
+turbulence_enabled = true
+turbulence_noise_strength = 0.01
+turbulence_noise_scale = 3.0
+turbulence_influence_min = 0.01
+turbulence_influence_max = 0.05
+collision_mode = 2
+collision_use_scale = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_06ovf"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="Curve" id="Curve_0dula"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.381818), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_32sn6"]
+curve = SubResource("Curve_0dula")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2e5s3"]
+direction = Vector3(0, 0, 0)
+spread = 180.0
+flatness = 1.0
+initial_velocity_min = 7.0
+initial_velocity_max = 7.0
+scale_curve = SubResource("CurveTexture_32sn6")
+
+[sub_resource type="SphereMesh" id="SphereMesh_bit3l"]
+radius = 0.2
+height = 0.4
+
+[node name="player" type="CharacterBody3D"]
+motion_mode = 1
+script = ExtResource("1_nix7t")
+
+[node name="camera_pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.564647, 0)
+
+[node name="spring_arm" type="SpringArm3D" parent="camera_pivot"]
+transform = Transform3D(1, 0, 0, 0, 0.938583, -0.345052, 0, 0.345052, 0.938583, 0, 2.66199, 7.82241)
+spring_length = 3.0
+
+[node name="camera" type="Camera3D" parent="camera_pivot/spring_arm"]
+transform = Transform3D(1, 0, 0, 0, 0.967854, -0.251512, 0, 0.251512, 0.967854, 0, 0, 0)
+
+[node name="c_shape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("CylinderShape3D_s81r5")
+
+[node name="particles" type="GPUParticles3D" parent="."]
+transparency = 0.5
+amount = 30
+lifetime = 0.8
+speed_scale = 2.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_imiua")
+draw_pass_1 = SubResource("SphereMesh_06ovf")
+
+[node name="floor_particles" type="GPUParticles3D" parent="."]
+lifetime = 0.2
+speed_scale = 0.5
+process_material = SubResource("ParticleProcessMaterial_2e5s3")
+draw_pass_1 = SubResource("SphereMesh_bit3l")
