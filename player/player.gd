@@ -1,9 +1,7 @@
 extends CharacterBody3D
 
 const SPEED = 10
-const LEAN_DIVIDER = 2
 const VEL_LERP = 0.05
-const ROT_LERP = 0.05
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -23,18 +21,11 @@ func _physics_process(_delta):
 	direction = direction.rotated(Vector3.UP, $camera_pivot.rotation.y)
 	
 	if direction:
-		#rotate_towards(direction)
 		move_towards(direction)
 	else:
-		#rotate_towards(Vector3.ZERO)
 		move_towards(Vector3.ZERO)
 	
-	rotate_towards(get_floor_normal())
 	move_and_slide()
-
-func rotate_towards(direction):
-	rotation.x = lerp(rotation.x, direction.z/LEAN_DIVIDER, ROT_LERP)
-	rotation.z = lerp(rotation.z, -direction.x/LEAN_DIVIDER, ROT_LERP)
 
 func move_towards(direction):
 	velocity.x = lerp(velocity.x, direction.x * SPEED, VEL_LERP)
