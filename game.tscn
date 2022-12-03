@@ -1,13 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://d4amn8togpb84"]
+[gd_scene load_steps=8 format=3 uid="uid://d4amn8togpb84"]
 
+[ext_resource type="PackedScene" uid="uid://dor1ciffudvcx" path="res://props/block.tscn" id="2_gtgy5"]
 [ext_resource type="PackedScene" uid="uid://brmbioeuy4vs2" path="res://player/player.tscn" id="2_pekso"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_kl384"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_x8l8x"]
+height = 1.0
 radius = 10.0
 
-[sub_resource type="SphereMesh" id="SphereMesh_hnx33"]
-radius = 10.0
-height = 2.0
+[sub_resource type="CylinderMesh" id="CylinderMesh_wyxqk"]
+top_radius = 10.0
+bottom_radius = 10.0
+height = 1.0
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_v3vnd"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -30,11 +33,10 @@ fog_density = 0.0128
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="c_shape" type="CollisionShape3D" parent="floor"]
-transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0)
-shape = SubResource("SphereShape3D_kl384")
+shape = SubResource("CylinderShape3D_x8l8x")
 
 [node name="mesh" type="MeshInstance3D" parent="floor"]
-mesh = SubResource("SphereMesh_hnx33")
+mesh = SubResource("CylinderMesh_wyxqk")
 
 [node name="sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.720894, 0.394437, 0.569852, 0.00526628, -0.819102, 0.573624, 0.693026, 0.416523, 0.588408, 7.38971, 10.571, 10.2035)
@@ -44,3 +46,9 @@ shadow_enabled = true
 
 [node name="world" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fqgwo")
+
+[node name="block" parent="." instance=ExtResource("2_gtgy5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 5.17874)
+
+[node name="block2" parent="." instance=ExtResource("2_gtgy5")]
+transform = Transform3D(0.628072, 0, -0.778155, 0, 1, 0, 0.778155, 0, 0.628072, 0, 1.5, 5.16477)

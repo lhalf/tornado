@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://brmbioeuy4vs2"]
+[gd_scene load_steps=13 format=3 uid="uid://brmbioeuy4vs2"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_nix7t"]
+[ext_resource type="Script" path="res://player/tornado_area.gd" id="2_6ny8m"]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_s81r5"]
-height = 4.0
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_7v515"]
+length = 0.001
 
 [sub_resource type="Curve" id="Curve_j2or2"]
 _data = [Vector2(0, 0.290909), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -59,6 +60,10 @@ scale_curve = SubResource("CurveTexture_32sn6")
 radius = 0.2
 height = 0.4
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_b16uw"]
+height = 10.0
+radius = 2.0
+
 [node name="player" type="CharacterBody3D"]
 motion_mode = 1
 script = ExtResource("1_nix7t")
@@ -67,15 +72,15 @@ script = ExtResource("1_nix7t")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.564647, 0)
 
 [node name="spring_arm" type="SpringArm3D" parent="camera_pivot"]
-transform = Transform3D(1, 0, 0, 0, 0.938583, -0.345052, 0, 0.345052, 0.938583, 0, 2.66199, 7.82241)
+transform = Transform3D(1, 0, 0, 0, 0.919471, 0.393156, 0, -0.393156, 0.919471, 0, 9.45063, 14.5702)
 spring_length = 3.0
 
 [node name="camera" type="Camera3D" parent="camera_pivot/spring_arm"]
 transform = Transform3D(1, 0, 0, 0, 0.967854, -0.251512, 0, 0.251512, 0.967854, 0, 0, 0)
 
 [node name="c_shape" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-shape = SubResource("CylinderShape3D_s81r5")
+shape = SubResource("SeparationRayShape3D_7v515")
+disabled = true
 
 [node name="particles" type="GPUParticles3D" parent="."]
 transparency = 0.5
@@ -91,3 +96,13 @@ lifetime = 0.2
 speed_scale = 0.5
 process_material = SubResource("ParticleProcessMaterial_2e5s3")
 draw_pass_1 = SubResource("SphereMesh_bit3l")
+
+[node name="tornado_area" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+disable_mode = 1
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("2_6ny8m")
+
+[node name="c_shape" type="CollisionShape3D" parent="tornado_area"]
+shape = SubResource("CylinderShape3D_b16uw")
