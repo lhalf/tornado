@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://d4amn8togpb84"]
 
-[ext_resource type="PackedScene" uid="uid://dor1ciffudvcx" path="res://props/block.tscn" id="2_gtgy5"]
 [ext_resource type="PackedScene" uid="uid://brmbioeuy4vs2" path="res://player/player.tscn" id="2_pekso"]
+[ext_resource type="PackedScene" uid="uid://c1joqd2ku4r3c" path="res://props/3_blocks.tscn" id="2_v7m3t"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_x8l8x"]
 height = 1.0
@@ -47,8 +47,5 @@ shadow_enabled = true
 [node name="world" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fqgwo")
 
-[node name="block" parent="." instance=ExtResource("2_gtgy5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 5.17874)
-
-[node name="block2" parent="." instance=ExtResource("2_gtgy5")]
-transform = Transform3D(0.628072, 0, -0.778155, 0, 1, 0, 0.778155, 0, 0.628072, 0, 1.5, 5.16477)
+[node name="3_blocks" parent="." instance=ExtResource("2_v7m3t")]
+transform = Transform3D(-0.29397, 0, -0.404452, 0, 0.5, 0, 0.404452, 0, -0.29397, 5.30179, 0, 5.62104)
